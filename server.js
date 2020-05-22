@@ -157,7 +157,7 @@ app.get("/register",function(req,res){
   res.render("auth/register");
 });
 
-//hanfle sign up logic
+//handle sign up logic, agr same account se sign up dobara hoga then err aayega.
 app.post("/register",function(req,res){
   User.register(new User({username:req.body.username}), req.body.password, function(err,z){
     if(err)
@@ -169,10 +169,22 @@ app.post("/register",function(req,res){
       {
         passport.authenticate("local")(req,res,function(){
           res.redirect("/campgrounds");
-        });
+        });  //here if l
       }
   });
 });
+
+//login
+app.get("/login",function(req,res){
+  res.render("auth/login");
+});
+
+//handling login logic, middleware use krna hai
+app.post("/logic",passport.authenticate("local",
+          {successRedirect:"/campgrounds", failureRedirect:"/login"})
+         ,function(req,res){ 
+});
+
 
 app.listen(process.env.PORT, process.env.IP, function(){
   console.log("yelp camp server started");
