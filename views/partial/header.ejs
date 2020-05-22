@@ -23,6 +23,9 @@
         <a class="nav-link" href="/login" >log in</a>
       </li>                <!--agr currentUser mein dat ahai then else will work -->
  <%     }else{    %>
+      <li >        <!--v r displaying only username , futher it can lead to prfile page-->
+        <a class="nav-link" href="#" > signed in as <%= currentUser.username %></a>
+      </li>
       <li >
         <a class="nav-link" href="/logout" >log out</a>
       </li>
