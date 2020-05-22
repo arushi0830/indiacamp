@@ -79,8 +79,12 @@ app.get("/campgrounds", function(req,res){
 });
 //CREATE ROUTE
 app.post("/campgrounds",isloggedin, function(req,res){
-  var newdata={title: req.body.place, image: req.body.url, description:req.body.description};
+  var newdata={title: req.body.place, image: req.body.url, description:req.body.description ,
+              author:{id:req.user._id, username:req.user.username} };
   //camps.push(newdata);
+  //console.log(req.user)  it contains info abbt currently loggedin user,
+  //agr used logged in nahi hai then it will be empty, bt ese ho ni sakta
+  //coz our middelware is there which ensure ki user logged in ho
   Campground.create(newdata,function(err,newly){
     if(err)
       console.log(err);

@@ -22,6 +22,8 @@
         <h5 class="card-title"><%= campground.title %></h5>
         <p class="card-text">
           <p>9.00/night</p>
+          <p><em>Submitted By: <%= campground.author.username %></em></p>
+          <!-- em tag is for italics-->
         <%= campground.description %>
         </p>
         
