@@ -107,9 +107,9 @@ app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
     if(err)
       {
-        console.log(z);
+  //      console.log(z);
       console.log(err);
-      res.redirect("/campgrounds/show");
+      res.redirect("/campgrounds/show"); //needed co logged in hai bt fir bhi sahi na chale then
       }
     else
       {
