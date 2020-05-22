@@ -31,16 +31,19 @@ seedDB();
 app.use(require("express-session")({
         secret:"my my",
         resave:false,
-        saveUnitialized:false
+        saveUninitialized:false
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 //now v want passport to use some fucntions of passport-local-mongoose,
 //so v r writing those
-passport.use(new LocalStrategy)
-passport.use()
-passport.use()
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//CAMPGROUND ROUTES
+
 /*Campground.create({
   title:"abc-hills",
   image:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeAFjOOK-i37FN_ilfp13bJ-HOmn673C2i2QRjPv417NnCu55i&usqp=CAU",
@@ -141,6 +144,31 @@ app.post("/campgrounds/:id/comments",function(req,res){
                 res.redirect("/campgrounds/"+z._id);  
             });
             }
+        });
+      }
+  });
+});
+
+
+//AUTH ROUTES
+
+//show registeration form
+app.get("/register",function(req,res){
+  res.render("auth/register");
+});
+
+//hanfle sign up logic
+app.post("/register",function(req,res){
+  User.register(new User({username:req.body.username}), req.body.password, function(err,z){
+    if(err)
+      {
+      console.log(err);
+        res.render("register");
+      }
+    else
+      {
+        passport.authenticate("local")(req,res,function(){
+          res.redirect("/campgrounds");
         });
       }
   });
