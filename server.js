@@ -106,7 +106,11 @@ app.get("/campgrounds/:id",function(req,res){
 app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
     if(err)
+      {
+        console.log(z);
       console.log(err);
+      res.redirect("/campgrounds/show");
+      }
     else
       {
         console.log(z);
