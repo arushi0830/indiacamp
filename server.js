@@ -1,7 +1,9 @@
 var express=require("express");
 var mongoose = require('mongoose');
 var bodyParser=require("body-parser");
-
+var passport=require("passport");
+var LocalStrategy=require("passport-local");
+//passport-local-mogoose wala model/user mein hai
 var Campground=require("./models/campground");
 var Comment=require("./models/comment");
 var User=require("./models/user");
@@ -23,6 +25,22 @@ db.once('open', function() {
 });
 
 seedDB();
+
+//password configuration
+//here require and use dono ek mein hi kr re hai
+app.use(require("express-session")({
+        secret:"my my",
+        resave:false,
+        saveUnitialized:false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+//now v want passport to use some fucntions of passport-local-mongoose,
+//so v r writing those
+passport.use(new LocalStrategy)
+passport.use()
+passport.use()
 /*Campground.create({
   title:"abc-hills",
   image:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeAFjOOK-i37FN_ilfp13bJ-HOmn673C2i2QRjPv417NnCu55i&usqp=CAU",
