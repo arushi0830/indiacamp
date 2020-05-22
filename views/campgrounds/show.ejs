@@ -36,7 +36,7 @@
   <div class="card-body">
      <% campground.comments.forEach(function(comment){  %>   
           <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
-    <h5><%= comment.author %> <small class="text-muted">10 days ago</small> </h5>    
+    <h5><%= comment.author.username %> <small class="text-muted">10 days ago</small> </h5>    
     <p class="card-text"><%= comment.text %></p>  
     <hr class="my-4">
     <%   })    %>
