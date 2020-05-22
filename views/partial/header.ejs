@@ -15,15 +15,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="nav navbar-nav ml-auto"> 
       <!--ml-auto puts thinsg to right and mr-auto puts things to left -->
-      <li>
+   <%   if(!currentUser){      %>   <!--agr currentUser empty or undefined hai ie.logged nahi hai user then -->
+      <li>                        <!--it means ki false hai, so humne use NOT lga kr true kr diya -->
         <a class="nav-link" href="/register">sign in</a>
       </li>
       <li >
         <a class="nav-link" href="/login" >log in</a>
-      </li>
+      </li>                <!--agr currentUser mein dat ahai then else will work -->
+ <%     }else{    %>
       <li >
         <a class="nav-link" href="/logout" >log out</a>
       </li>
+  <%    }  %>
     </ul>
   </div>
 </nav>
