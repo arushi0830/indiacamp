@@ -24,7 +24,7 @@ db.once('open', function() {
   console.log("we're connected!");
 });
 
-seedDB();
+//seedDB();
 
 //password configuration
 //here require and use dono ek mein hi kr re hai
@@ -148,8 +148,9 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
           else
             {
               //add username and id to comment
-              x.author.id=req.user._id;
-              x.author.username=req.user.username;
+              console.log(req.user);
+      //        x.author.id=req.user._id;
+      //        x.author.username=req.user.username;
               //save comment
               x.save();
             z.comments.push(x); //comments naam ke array mein daal re hai joki comment ejs mein hai

@@ -7,7 +7,7 @@ var commentSchema=mongoose.Schema({
   author:{
     id:{type:mongoose.Schema.Types.ObejctId, ref:"User"},
     username:String
-  }
+          }
 });
  
 module.exports=mongoose.model("Comment",commentSchema);
