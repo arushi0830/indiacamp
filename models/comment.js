@@ -12,7 +12,7 @@ var mongoose=require("mongoose");
 });*/
 
 var commentSchema=new mongoose.Schema({
-  title:String,
+  text:String,
   author:{   //via ref v r making the relation
     id:{
     type:mongoose.Schema.Types.ObjectId,   //type

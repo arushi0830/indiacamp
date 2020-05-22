@@ -78,7 +78,7 @@ app.get("/campgrounds", function(req,res){
   
 });
 //CREATE ROUTE
-app.post("/campgrounds", function(req,res){
+app.post("/campgrounds",isloggedin, function(req,res){
   var newdata={title: req.body.place, image: req.body.url, description:req.body.description};
   //camps.push(newdata);
   Campground.create(newdata,function(err,newly){
@@ -90,7 +90,7 @@ app.post("/campgrounds", function(req,res){
   
 });
 //NEW ROUTE
-app.get("/campgrounds/new", function(req,res){
+app.get("/campgrounds/new",isloggedin, function(req,res){
   res.render("campgrounds/new");
 });
 //SHOW ROUTE
