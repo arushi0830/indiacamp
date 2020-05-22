@@ -1,0 +1,48 @@
+<%- include ("../partial/header") -%>
+
+	
+
+
+  <div class="container">
+    <div class="row">       
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header"><strong>Indiacamp</strong></div>
+          <ul class="list-group list-group-flush">
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div> 
+      </div>
+      
+      <div class="card col-md-8">       
+      <img src="<%=campground.image%>" class="card-img-top" alt="flower valley image">
+        <div class="card-body">
+        <h5 class="card-title"><%= campground.title %></h5>
+        <p class="card-text">
+          <p>9.00/night</p>
+        <%= campground.description %>
+        </p>
+        
+        </div>
+      </div>      
+     </div>
+<div class="row">        
+<div class="float-right card col-md-8" id="abc">
+  <h5 class="card-header text-right">
+  <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary">Add Comment</a>
+  </h5>
+  <div class="card-body">
+     <% campground.comments.forEach(function(comment){  %>   
+          <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
+    <h5><%= comment.author %> <small class="text-muted">10 days ago</small> </h5>    
+    <p class="card-text"><%= comment.text %></p>  
+    <hr class="my-4">
+    <%   })    %>
+  </div>
+</div>  
+</div>
+
+<%- include ("../partial/footer") -%>
+</div>

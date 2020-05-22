@@ -1,34 +1,133 @@
-// server.js
-// where your node app starts
+var express=require("express");
+var mongoose = require('mongoose');
+var bodyParser=require("body-parser");
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
-const express = require("express");
-const app = express();
+var Campground=require("./models/campground");
+var Comment=require("./models/comment");
+var User=require("./models/user");
+var seedDB=require("./seed.js");
 
-// our default array of dreams
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
-
-// make all the files in 'public' available
-// https://expressjs.com/en/starter/static-files.html
+var app=express();
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-// https://expressjs.com/en/starter/basic-routing.html
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
+//var MONGODB_URI = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST+':'+process.env.DB_PORT+'/'+process.env.DB;
+var url='mongodb+srv://'+process.env.USER+':'+process.env.SECRET+'@'+'cluster0-mvqoy.mongodb.net/test?retryWrites=true&w=majority';
+mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true});
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("we're connected!");
 });
 
-// send the default array of dreams to the webpage
-app.get("/dreams", (request, response) => {
-  // express helps us take JS objects and send them as JSON
-  response.json(dreams);
+seedDB();
+/*Campground.create({
+  title:"abc-hills",
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeAFjOOK-i37FN_ilfp13bJ-HOmn673C2i2QRjPv417NnCu55i&usqp=CAU",
+  description:"its beautiful but has nothing. so never ever come there. bt jada paise toh aajo"
+}, function(err,z){
+  if(err)
+    console.log(err);
+  else
+    console.log(z);
+});*/
+
+app.get("/",function(req,res){
+  res.render("landing");
+});
+//INDEX ROUTE
+app.get("/campgrounds", function(req,res){
+  Campground.find({}, function(err,allcamps){
+    if(err)
+      console.log(err);
+    else
+      {
+        console.log("worked");
+        res.render("campgrounds/index", {camps:allcamps});
+      }
+  });
+  
+});
+//CREATE ROUTE
+app.post("/campgrounds", function(req,res){
+  var newdata={title: req.body.place, image: req.body.url, description:req.body.description};
+  //camps.push(newdata);
+  Campground.create(newdata,function(err,newly){
+    if(err)
+      console.log(err);
+    else
+      res.redirect("/campgrounds");
+  });
+  
+});
+//NEW ROUTE
+app.get("/campgrounds/new", function(req,res){
+  res.render("campgrounds/new");
+});
+//SHOW ROUTE
+app.get("/campgrounds/:id",function(req,res){
+  Campground.findById(req.params.id).populate("comments").exec(function(err,z){
+    if(err)
+      console.log(err);
+    else
+      {
+        console.log(z);
+      res.render("campgrounds/show", {campground:z});
+      }
+  });
 });
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log("Your app is listening on port " + listener.address().port);
+////////////comments routes
+
+//new route
+app.get("/campgrounds/:id/comments/new",function(req,res){
+  Campground.findById(req.params.id,function(err,z){
+    if(err)
+      console.log(err);
+    else
+      {
+        console.log(z);
+      res.render("comments/new",{campground:z});
+      }
+  });
+  
+});
+
+//create route
+app.post("/campgrounds/:id/comments",function(req,res){
+  //lookup campground using id
+  //create new comment
+  //connect new comment to campground
+  //redirect campground show page
+  Campground.findById(req.params.id,function(err,z){
+    if(err)
+      {
+        console.log(err);
+        res.redirect("/campgrounds/"+z._id);
+      }
+    else
+      {
+        console.log(req.body.comment);
+        Comment.create(req.body.comment,function(err,x){
+          if(err)
+            console.log(err);
+          else
+            {
+            z.comments.push(x); //comments naam ke array mein daal re hai joki comment ejs mein hai
+            z.save(function(err,w){     //not necessary to use callbck here bt i did
+              if(err)
+                console.log(err);
+              else
+                res.redirect("/campgrounds/"+z._id);  
+            });
+            }
+        });
+      }
+  });
+});
+
+app.listen(process.env.PORT, process.env.IP, function(){
+  console.log("yelp camp server started");
 });
