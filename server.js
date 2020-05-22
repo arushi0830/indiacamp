@@ -163,15 +163,15 @@ app.post("/register",function(req,res){
     if(err)
       {
       console.log(err);
-        res.render("register");
+        res.render("auth/register");
       }
     else
       {
         passport.authenticate("local")(req,res,function(){
           res.redirect("/campgrounds");
-        });  //here if l
-      }
-  });
+        });  //here if sign p sahi se ho gya then login kwa re
+      }      //neeche in login its used as middleware coz before loggin in 
+  });          //v have to check if the user is valid
 });
 
 //login
@@ -180,11 +180,22 @@ app.get("/login",function(req,res){
 });
 
 //handling login logic, middleware use krna hai
-app.post("/logic",passport.authenticate("local",
+app.post("/login",passport.authenticate("local",
           {successRedirect:"/campgrounds", failureRedirect:"/login"})
          ,function(req,res){ 
 });
 
+//logout route
+app.get("/logout",function(req,res){
+  req.logout();
+  res.redirect("/campgrounds");
+});
+
+//now v dont want user to add comments without loginor signup
+//so uska middleware bna ri hai
+function isloggedin(req,res,next){
+  if(req.is)
+}
 
 app.listen(process.env.PORT, process.env.IP, function(){
   console.log("yelp camp server started");
