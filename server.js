@@ -199,8 +199,8 @@ app.get("/logout",function(req,res){
 //now v dont want user to add comments without loginor signup
 //so uska middleware bna ri hai
 function isloggedin(req,res,next){
-  if(req.isAuthenticated())
-    return next;
+  if(req.isAuthenticated()) 
+    return next();
   else
     res.redirect("/login");
 }
