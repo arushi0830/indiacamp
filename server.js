@@ -103,7 +103,7 @@ app.get("/campgrounds/:id",function(req,res){
 ////////////comments routes
 
 //new route
-app.get("/campgrounds/:id/comments/new",function(req,res){
+app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
     if(err)
       console.log(err);
@@ -116,8 +116,9 @@ app.get("/campgrounds/:id/comments/new",function(req,res){
   
 });
 
+//iadhr bhi middlware daalo coz someone can make a post route via postamn etc things
 //create route
-app.post("/campgrounds/:id/comments",function(req,res){
+app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
   //lookup campground using id
   //create new comment
   //connect new comment to campground
@@ -194,7 +195,10 @@ app.get("/logout",function(req,res){
 //now v dont want user to add comments without loginor signup
 //so uska middleware bna ri hai
 function isloggedin(req,res,next){
-  if(req.is)
+  if(req.isAuthenticated())
+    return next;
+  else
+    res.redirect("/login");
 }
 
 app.listen(process.env.PORT, process.env.IP, function(){
