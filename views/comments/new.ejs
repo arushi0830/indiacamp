@@ -8,13 +8,13 @@
 <form method="POST" action="/campgrounds/<%= campground._id %>/comments">
   <div style="width:30%; margin:25px auto;">
   <div class="form-group">
-    <label>comment</label>
+    <label class="required">Comment</label>
     <input type="text" class="form-control" placeholder="text" name="comment[text]" required>
   </div>
   <button type="submit" class="btn btn-primary btn-block">Submit</button>
 </form>
 
-<a href="/campgrounds/<%= campground._id %>"> go back</a>
+<a href="/campgrounds/<%= campground._id %>"> Go Back</a>
 <%- include("../partial/footer") -%>
 </div>
 </div>

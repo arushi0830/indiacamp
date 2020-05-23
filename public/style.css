@@ -32,3 +32,8 @@ img{
 {
   margin-top:15px;
 }
+
+ .required:after {
+    content:" *";
+    color: red;
+  }
