@@ -220,21 +220,25 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
   });
 });
 
+//2 ids aa ri hai ek comment ki hai n ek cmapground ki hai
+// :something means ki jo bhi uske wo as itis leke aao,
+// so :any_variabe_name
 //edit route
 app.get("/campgrounds/:id/comments/:comment_id/edit",function(req,res){
-  Campground.findById(req.params.id, function(err,z){
+  Comment.findById(req.params.comment_id, function(err,z){
     if(err){
       console.log(err);
-      res.redirect("/campgrounds/"+z._id);
+      res.redirect("back");
     }
     else
-        res.render("comments/edit",{campgound:z});
+        res.render("comments/edit",{campground_id:req.params.id, comment:z});
   });
 });
 
 //update route
-app.get("/campgrounds/:id/comments/:comment_id",function(req,res){
-  
+app.put("/campgrounds/:id/comments/:comment_id",function(req,res){
+  //findByIdAndUpadte take 3 arguments
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(req,res))
 });
 
 ////////////////////////////AUTH ROUTES
