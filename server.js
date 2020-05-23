@@ -207,7 +207,10 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
         console.log(req.body.comment);
         Comment.create(req.body.comment,function(err,x){
           if(err)
+            {
             console.log(err);
+            req.flash("error","Error, Try Again!");
+            }
           else
             {
               //add username and id to comment
@@ -219,7 +222,10 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
             z.comments.push(x); //comments naam ke array mein daal re hai joki comment ejs mein hai
             z.save(function(err,w){     //not necessary to use callbck here bt i did
               if(err)
+                {
                 console.log(err);
+                req.flash("error","Error, Try Again!");
+                }
               else
                 {                  
                 req.flash("done","Successfully created comment!");
@@ -301,12 +307,13 @@ app.post("/register",function(req,res){
     if(err)
       {
       console.log(err);
-         req.flash("error",err);  //its any key value pair, can use any name
+        req.flash("error",err);
         res.render("auth/register");
       }
     else
       {
         passport.authenticate("local")(req,res,function(){
+          req.flash("done","Welcome to Indiacamp"+ z.username);
           res.redirect("/campgrounds");
         });  //here if sign p sahi se ho gya then login kwa re
       }      //neeche in login its used as middleware coz before loggin in 
@@ -359,7 +366,7 @@ function checkOwnership(req,res,next){
         if(err)
           {
             console.log(err);
-            req.flash("error","System error, Kindly refresh.");
+            req.flash("error","Error, Try Again!");
             res.redirect("back");
           }
         else
@@ -393,7 +400,7 @@ function checkcommentOwnership(req,res,next)
         if(err)
           {
             console.log(err);
-            req.flash("error","System error, Kindly refresh.");
+            req.flash("error","Error, Try Again!");
             res.redirect("back");
           }
         else
