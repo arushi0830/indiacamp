@@ -222,9 +222,20 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
 
 //edit route
 app.get("/campgrounds/:id/comments/edit",function(req,res){
-  res.render("comments/edit")
+  Campground.findById(req.params.id, function(err,z){
+    if(err){
+      console.log(err);
+      res.redirect("/campgrounds/"+z._id);
+    }
+    else
+        res.render("comments/edit",{campgound:z});
+  });
 });
 
+//update route
+app.get("/campgrounds/:id/comments",function(req,res){
+  
+});
 
 ////////////////////////////AUTH ROUTES
 
