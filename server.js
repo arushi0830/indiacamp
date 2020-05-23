@@ -52,6 +52,7 @@ passport.deserializeUser(User.deserializeUser());
 //as v have to pass req.user for nav bar taki uspe <li> accordingly display ho
 app.use(function(req,res,next){
   res.locals.currentUser=req.user;
+  res.locals.message=req.flash("error");
   next();
 });
 
@@ -272,7 +273,7 @@ app.delete("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,functio
 });
 
 ////////////////////////////AUTH ROUTES
-
+//=====================================================================================
 //show registeration form
 app.get("/register",function(req,res){
   res.render("auth/register");
@@ -318,7 +319,10 @@ function isloggedin(req,res,next){
   if(req.isAuthenticated()) 
     return next();
   else
+    {
+    req.flash("error","Please Log-In First");  
     res.redirect("/login");
+    }
 }
 
 
