@@ -220,8 +220,13 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
   });
 });
 
+//edit route
+app.get("/campgrounds/:id/comments/edit",function(req,res){
+  res.render("comments/edit")
+});
 
-//AUTH ROUTES
+
+////////////////////////////AUTH ROUTES
 
 //show registeration form
 app.get("/register",function(req,res){
@@ -239,7 +244,7 @@ app.post("/register",function(req,res){
     else
       {
         passport.authenticate("local")(req,res,function(){
-          res.redirect("back");
+          res.redirect("/campgrounds");
         });  //here if sign p sahi se ho gya then login kwa re
       }      //neeche in login its used as middleware coz before loggin in 
   });          //v have to check if the user is valid
@@ -252,7 +257,7 @@ app.get("/login",function(req,res){
 
 //handling login logic, middleware use krna hai
 app.post("/login",passport.authenticate("local",
-          {successRedirect:"back", failureRedirect:"/login"})
+          {successRedirect:"/campgrounds", failureRedirect:"/login"})
          ,function(req,res){ 
 });
 
