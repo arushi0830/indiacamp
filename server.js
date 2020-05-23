@@ -128,8 +128,10 @@ app.get("/campgrounds/:id/edit",function(req,res){
   });    
 });
 
-//update rooute
+//update route
 app.put("/campgrounds/:id",function(req,res){
+//  res.send("worked");
+  
   //finc and update the correct campground
   //redirect somewhere
   Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
@@ -140,7 +142,7 @@ app.put("/campgrounds/:id",function(req,res){
         res.redirect("/campgrounds");
       }
     else{
-      res.render("/campgrounds/"+z._id);  //can also write req.params._id
+      res.redirect("/campgrounds/"+z._id);  //can also write req.params._id
     }
   });
   
