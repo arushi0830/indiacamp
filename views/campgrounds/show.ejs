@@ -23,6 +23,9 @@
           <!-- em tag is for italics-->
         <%= campground.description %>
         </p>
+        <!-- now v checking agr logged in user is same as jisne campground banya hai
+            , if not same then dont show edit and delete buttons-->
+     <%   if()
          <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-xs btn-warning">Edit Campground</a>
         <!-- edit mein sirf href bhejna tha , no data waas going so <a> se chal gya, bt in delete v have to send data
               to delete from db -->

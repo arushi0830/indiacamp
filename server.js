@@ -123,14 +123,15 @@ app.get("/campgrounds/:id/edit", checkOwnership, function(req,res){
 });
 
 //update route
-app.put("/campgrounds/:id",function(req,res){
+app.put("/campgrounds/:id",checkOwnership,function(req,res){
 //  res.send("worked");
   
   //finc and update the correct campground
   //redirect somewhere
   Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
-    console.log(req.body.data);
+  //  console.log(req.body.data);
     //req.body.data coz form mein name="data[name]" ....
+    //no need of if anymore bt v r still keeping it
     if(err)
       {
         console.log(err);
@@ -144,13 +145,14 @@ app.put("/campgrounds/:id",function(req,res){
 });  
 
 //delete route
-app.delete("/campgrounds/:id",function(req,res){
+app.delete("/campgrounds/:id",checkOwnership,function(req,res){
   Campground.findByIdAndRemove(req.params.id,function(err,z){
-    if(err){
+   /* if(err){
       console.log(err);
       res.redirect("/campgrounds");
     }
-    else
+    not needed any more as middleware hai aab
+    else*/
       res.redirect("/campgrounds");
   });
 });
@@ -237,7 +239,7 @@ app.post("/register",function(req,res){
     else
       {
         passport.authenticate("local")(req,res,function(){
-          res.redirect("/campgrounds");
+          res.redirect("back");
         });  //here if sign p sahi se ho gya then login kwa re
       }      //neeche in login its used as middleware coz before loggin in 
   });          //v have to check if the user is valid
@@ -250,7 +252,7 @@ app.get("/login",function(req,res){
 
 //handling login logic, middleware use krna hai
 app.post("/login",passport.authenticate("local",
-          {successRedirect:"/campgrounds", failureRedirect:"/login"})
+          {successRedirect:"back", failureRedirect:"/login"})
          ,function(req,res){ 
 });
 
