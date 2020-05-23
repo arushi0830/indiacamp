@@ -48,8 +48,10 @@
     <% campground.comments.forEach(function(comment){  %>   
     <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
     <h5><%= comment.author.username %> <small class="text-muted">10 days ago</small> </h5> 
-    <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-primary">Edit Comment</a>
-    <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/delete" class="btn btn-sm btn-primary">Delete Comment</a>
+    <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-warning">Edit Comment</a>
+    <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" action="POST">
+          <button class="btn btn-sm btn-danger">Delete Comment</button>
+    </form>
     <p class="card-text"><%= comment.text %></p>  
     <hr class="my-4">
     <%   })    %>
