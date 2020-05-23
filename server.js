@@ -111,8 +111,7 @@ app.post("/campgrounds",isloggedin, function(req,res){
       req.flash("done","Successfully Created Campground!"); 
       res.redirect("/campgrounds");
     }
-  });
-  
+  });  
 });
 
 //NEW ROUTE
@@ -187,7 +186,7 @@ app.delete("/campgrounds/:id",checkOwnership,function(req,res){
 
 ////////////comments routes
 //=========================================================================================
-//new route
+//NEW ROUTE
 app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
     if(err)
@@ -206,8 +205,8 @@ app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   
 });
 
+//CREATE ROUTE
 //iadhr bhi middlware daalo coz someone can make a post route via postamn etc things
-//create route
 app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
   //lookup campground using id
   //create new comment
@@ -264,7 +263,8 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
 //2 ids aa ri hai ek comment ki hai n ek cmapground ki hai
 // :something means ki jo bhi uske wo as itis leke aao,
 // so :any_variabe_name
-//edit route
+
+//EDIT ROUTE
 app.get("/campgrounds/:id/comments/:comment_id/edit",checkcommentOwnership,function(req,res){
   Comment.findById(req.params.comment_id, function(err,z){
     if(err){
@@ -277,7 +277,7 @@ app.get("/campgrounds/:id/comments/:comment_id/edit",checkcommentOwnership,funct
   });
 });
 
-//update route
+//UPDATE ROUTE
 app.put("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(req,res){
   //findByIdAndUpadte take 3 arguments
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err,z){
@@ -293,17 +293,17 @@ app.put("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(r
       res.redirect("/campgrounds/"+req.params.id);
       }
     //cant use z._id coz wo comment ki id hai bt v have to go back at show pg of campground
-  })
+  });
 });
 
-//delete route
+//DELETE ROUTE
 app.delete("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(req,res){
   Comment.findByIdAndDelete(req.params.comment_id, req.body.comment, function(err,z){
     if(err)
       {
-        console.log(err);
-        req.flash("error","Error, Try Again!");
-        res.redirect("back");
+      console.log(err);
+      req.flash("error","Error, Try Again!");
+      res.redirect("back");
       }
     else
       {
@@ -316,18 +316,19 @@ app.delete("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,functio
 
 ////////////////////////////AUTH ROUTES
 //=====================================================================================
-//show registeration form
+//SHOW REGISTER/SIGN-UP FORM OR SIGN-UP ROUTE
 app.get("/register",function(req,res){
   res.render("auth/register");
 });
 
-//handle sign up logic, agr same account se sign up dobara hoga then err aayega.
+//HANDLE REGISTER/SIGN-UP LOGIC
+//agr same account se sign up dobara hoga then err aayega.
 app.post("/register",function(req,res){
   User.register(new User({username:req.body.username}), req.body.password, function(err,z){
     if(err)
       {
       console.log(err);
-        req.flash("error",err);
+        req.flash("error",err.message); // .message likhna hoga else object aayega
         res.render("auth/register");
       }
     else
@@ -340,18 +341,19 @@ app.post("/register",function(req,res){
   });          //v have to check if the user is valid
 });
 
-//login
+//lOG-IN ROUTE
 app.get("/login",function(req,res){
   res.render("auth/login");
 });
 
-//handling login logic, middleware use krna hai
+//HANDLING LOG-IN LOGIC
+//middleware use krna hai
 app.post("/login",passport.authenticate("local",
           {successRedirect:"/campgrounds", failureRedirect:"/login"})
          ,function(req,res){ 
 });
 
-//logout route
+//LOGOUT ROUTE
 app.get("/logout",function(req,res){
   req.logout();
    req.flash("done","Successfully Logged You Out.");  //its any key value pair, can use any name
@@ -359,10 +361,10 @@ app.get("/logout",function(req,res){
 });
 
 
-//middleware
+//MIDDLEWARE
 //===========================================================================================
 
-//now v dont want user to add comments without loginor signup
+//now v dont want user to add comments without login or signup
 //so uska middleware bna ri hai
 function isloggedin(req,res,next){
   if(req.isAuthenticated()) 
