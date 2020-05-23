@@ -115,18 +115,11 @@ app.get("/campgrounds/:id",function(req,res){
 
 
 //edit route
-app.get("/campgrounds/:id/edit",function(req,res){
+app.get("/campgrounds/:id/edit", checkOwnership, function(req,res){
   Campground.findById(req.params.id, function(err,z){
-    if(err)
-      {
-        console.log(err);
-        res.redirect("/campgrounds");
-      }
-    else
-      {
         res.render("campgrounds/edit",{campground:z});
-      }
-  });    
+      });
+  //error saare mmiddleware mein kr diye hai handle
 });
 
 //update route
@@ -282,30 +275,32 @@ function isloggedin(req,res,next){
 //1st check: if user is logged in or not
 //2nd :check if user is same as submitted by wala or not
 //if not redirect
-function checkOwernship(req,res,next){
+function checkOwnership(req,res,next){
   if(req.isAuthenticated())
     {
       Campground.findById(req.params.id, function(err,z){
         if(err)
           {
             console.log(err);
-            res.redirect("/campgrounds");
+            res.redirect("back");
           }
         else
           {
             //does user own the campground, cant do === coz ek object hai and ek string
             //so use equals function defined in mongoose
-            if(z.author.id.equals(req.user._id){
-               res.render("/campgrounds/edit",{campground:z})
-               })
+            if(z.author.id.equals(req.user._id)){
+               next();
+               }
              else
-               res.send()
+               {console.log(err);
+                res.redirect("back");
+               }
           }
       });
     }
   else
     {
-      
+      res.redirect("back");
     }
 }
 
