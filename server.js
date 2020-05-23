@@ -135,6 +135,7 @@ app.put("/campgrounds/:id",function(req,res){
   //finc and update the correct campground
   //redirect somewhere
   Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
+    console.log(req.body.data);
     //req.body.data coz form mein name="data[name]" ....
     if(err)
       {
@@ -148,7 +149,17 @@ app.put("/campgrounds/:id",function(req,res){
   
 });
 
-
+//delete route
+app.delete("/campgrounds/:id/delete",function(req,res){
+  Campground.findByIdAndRemove(req.params.id,function(err,z){
+    if(err){
+      console.log(err);
+      res.redirect("/campgrounds/"+z._id);
+    }
+    else
+      res.redirect("/campgrounds/show");
+  });
+});
 
 
 
