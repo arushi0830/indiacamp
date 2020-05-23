@@ -4,6 +4,7 @@ var bodyParser=require("body-parser");
 var passport=require("passport");
 var LocalStrategy=require("passport-local");
 var methodOverride=require("method-override");
+var flash=require("connect-flash");
 
 //passport-local-mogoose wala model/user mein hai
 var Campground=require("./models/campground");
@@ -18,6 +19,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 //var MONGODB_URI = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST+':'+process.env.DB_PORT+'/'+process.env.DB;
 var url='mongodb+srv://'+process.env.USER+':'+process.env.SECRET+'@'+'cluster0-mvqoy.mongodb.net/test?retryWrites=true&w=majority';
