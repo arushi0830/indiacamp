@@ -113,6 +113,12 @@ app.get("/campgrounds/:id",function(req,res){
   });
 });
 
+//now v r doing autherization here
+//1st check: if user is logged in or not
+//2nd :check if user is same as submitted by wala or not
+//if not redirect
+
+
 //edit route
 app.get("/campgrounds/:id/edit",function(req,res){
   Campground.findById(req.params.id, function(err,z){
