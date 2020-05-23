@@ -24,7 +24,12 @@
         <%= campground.description %>
         </p>
          <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-primary">Edit Campground</a>
-        <form method="" action=""
+        <!-- edit mein sirf href bhejna tha , no data waas going so <a> se chal gya, bt in delete v have to send data
+              to delete from db -->
+        <form method="POST" action="/campgrounds/<%= campground._id %>?_method=DELETE">
+          <!--form is needed coz form mein method hai, sirk link se nahi hoga coz link has only href and not method -->
+          <button class="btn btn-primary">Delete Campground</button>
+        </form>
         </div>
       </div>      
      </div>

@@ -147,10 +147,10 @@ app.put("/campgrounds/:id",function(req,res){
     }
   });
   
-});
+});  
 
 //delete route
-app.delete("/campgrounds/:id/delete",function(req,res){
+app.delete("/campgrounds/:id",function(req,res){
   Campground.findByIdAndRemove(req.params.id,function(err,z){
     if(err){
       console.log(err);
