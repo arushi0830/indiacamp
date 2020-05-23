@@ -9,7 +9,9 @@ var methodOverride=require("method-override");
 var Campground=require("./models/campground");
 var Comment=require("./models/comment");
 var User=require("./models/user");
-var seedDB=require("./seed.js");
+var seedDB=require("./seed.js"); 
+//require kr re hai seed file , bt humne sirf 1 baar call krna hai use
+//coz else har baar sab db delete hota n wo hi wali values fir sse enter hoti
 
 var app=express();
 app.set("view engine", "ejs");
