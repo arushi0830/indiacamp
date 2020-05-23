@@ -17,17 +17,17 @@
       <!--ml-auto puts thinsg to right and mr-auto puts things to left -->
    <%   if(!currentUser){      %>   <!--agr currentUser empty or undefined hai ie.logged nahi hai user then -->
       <li>                        <!--it means ki false hai, so humne use NOT lga kr true kr diya -->
-        <a class="nav-link" href="/register">sign in</a>
+        <a class="nav-link" href="/register">Sign-up</a>
       </li>
       <li >
-        <a class="nav-link" href="/login" >log in</a>
+        <a class="nav-link" href="/login" >Log-in</a>
       </li>                <!--agr currentUser mein dat ahai then else will work -->
  <%     }else{    %>
       <li >        <!--v r displaying only username , futher it can lead to prfile page-->
-        <a class="nav-link" href="#" > signed in as <%= currentUser.username %></a>
+        <a class="nav-link" href="#" > Signed in as <%= currentUser.username %></a>
       </li>
       <li >
-        <a class="nav-link" href="/logout" >log out</a>
+        <a class="nav-link" href="/logout" >Log-out</a>
       </li>
   <%    }  %>
     </ul>
