@@ -221,7 +221,7 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
 });
 
 //edit route
-app.get("/campgrounds/:id/comments/edit",function(req,res){
+app.get("/campgrounds/:id/comments/:comment_id/edit",function(req,res){
   Campground.findById(req.params.id, function(err,z){
     if(err){
       console.log(err);
@@ -233,7 +233,7 @@ app.get("/campgrounds/:id/comments/edit",function(req,res){
 });
 
 //update route
-app.get("/campgrounds/:id/comments",function(req,res){
+app.get("/campgrounds/:id/comments/:comment_id",function(req,res){
   
 });
 

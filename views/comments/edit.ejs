@@ -5,7 +5,7 @@
    Edit Comment of <%= campground.title %>
 </h1>
 
-<form method="POST" action="/campgrounds/<%= campground._id %>/comments?_method=PUT">
+<form method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT">
   <div style="width:30%; margin:25px auto;">
   <div class="form-group">
     <label>comment</label>
