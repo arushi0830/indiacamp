@@ -74,19 +74,24 @@ app.use(function(req,res,next){
 app.get("/",function(req,res){
   res.render("landing");
 });
+
 //INDEX ROUTE
 app.get("/campgrounds", function(req,res){
   Campground.find({}, function(err,allcamps){
     if(err)
+      {
       console.log(err);
+      req.flash("error","Error, Try Again!"); 
+      }
     else
       {
-        console.log("worked");
+       //console.log("worked");
         res.render("campgrounds/index", {camps:allcamps});
       }
   });
   
 });
+
 //CREATE ROUTE
 app.post("/campgrounds",isloggedin, function(req,res){
   var newdata={title: req.body.place, image: req.body.url, description:req.body.description ,
@@ -96,70 +101,83 @@ app.post("/campgrounds",isloggedin, function(req,res){
   //agr used logged in nahi hai then it will be empty, bt ese ho ni sakta
   //coz our middelware is there which ensure ki user logged in ho
   Campground.create(newdata,function(err,newly){
-    if(err)
+  if(err)
+    {
       console.log(err);
-    else
+      req.flash("error","Error, Try Again!"); 
+    }
+  else
+    {
+      req.flash("done","Successfully Created Campground!"); 
       res.redirect("/campgrounds");
+    }
   });
   
 });
+
 //NEW ROUTE
 app.get("/campgrounds/new",isloggedin, function(req,res){
   res.render("campgrounds/new");
 });
+
 //SHOW ROUTE
 app.get("/campgrounds/:id",function(req,res){
   Campground.findById(req.params.id).populate("comments").exec(function(err,z){
     if(err)
+      {
       console.log(err);
+      req.flash("error","Error, Try Again!"); 
+      }
     else
       {
-        console.log(z);
+      console.log(z);
       res.render("campgrounds/show", {campground:z});
       }
   });
 });
 
 
-//edit route
+//EDIT ROUTE 
+//error saare mmiddleware mein kr diye hai handle
 app.get("/campgrounds/:id/edit", checkOwnership, function(req,res){
   Campground.findById(req.params.id, function(err,z){
-        res.render("campgrounds/edit",{campground:z});
-      });
-  //error saare mmiddleware mein kr diye hai handle
+      res.render("campgrounds/edit",{campground:z});
+      });  
 });
 
-//update route
+//UPDATE ROUTE
 app.put("/campgrounds/:id",checkOwnership,function(req,res){
-//  res.send("worked");
-  
-  //finc and update the correct campground
-  //redirect somewhere
-  Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
-  //  console.log(req.body.data);
+    //res.send("worked"); 
+    //finc and update the correct campground
+    //redirect somewhere  
+    Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
+    //console.log(req.body.data);
     //req.body.data coz form mein name="data[name]" ....
     //no need of if anymore bt v r still keeping it
     if(err)
       {
         console.log(err);
+        req.flash("error","Error, Try Again!"); 
         res.redirect("/campgrounds");
       }
-    else{
-      res.redirect("/campgrounds/"+z._id);  //can also write req.params._id
-    }
-  });
-  
+    else
+      {
+        req.flash("done","Successfully Updated Campground!"); 
+        res.redirect("/campgrounds/"+z._id);  //can also write req.params._id
+      }
+  });  
 });  
 
 //delete route
 app.delete("/campgrounds/:id",checkOwnership,function(req,res){
   Campground.findByIdAndRemove(req.params.id,function(err,z){
-   /* if(err){
+       /* if(err){
       console.log(err);
       res.redirect("/campgrounds");
-    }
-    not needed any more as middleware hai aab
-    else*/
+      }
+      not needed any more as middleware hai aab
+      else*/
+      req.flash("done","Successfully Deleted Campground!"); 
       res.redirect("/campgrounds");
   });
 });
@@ -174,14 +192,14 @@ app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
     if(err)
       {
-  //      console.log(z);
+      //console.log(z);
       console.log(err);
       req.flash("error","Error, Try Again!");  
       res.redirect("/campgrounds/show"); //needed co logged in hai bt fir bhi sahi na chale then
       }
     else
       {
-      console.log(z);
+      //console.log(z);
       res.render("comments/new",{campground:z});
       }
   });
@@ -210,28 +228,30 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
             {
             console.log(err);
             req.flash("error","Error, Try Again!");
+            res.redirect("/campgrounds/"+z._id);
             }
           else
             {
               //add username and id to comment
-        //      console.log(req.user);
-             x.author.id=req.user._id;
-             x.author.username=req.user.username;
+              //console.log(req.user);
+               x.author.id=req.user._id;
+               x.author.username=req.user.username;
               //save comment
               x.save();
-            z.comments.push(x); //comments naam ke array mein daal re hai joki comment ejs mein hai
-            z.save(function(err,w){     //not necessary to use callbck here bt i did
+              z.comments.push(x); //comments naam ke array mein daal re hai joki comment ejs mein hai
+              z.save(function(err,w){     //not necessary to use callbck here bt i did
               if(err)
                 {
                 console.log(err);
                 req.flash("error","Error, Try Again!");
+                res.redirect("/campgrounds/"+z._id);
                 }
               else
                 {                  
                 req.flash("done","Successfully created comment!");
                 res.redirect("/campgrounds/"+z._id);  
                 }
-            });
+                });
             }
         });
       }
