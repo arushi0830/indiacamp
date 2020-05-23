@@ -129,7 +129,22 @@ app.get("/campgrounds/:id/edit",function(req,res){
 });
 
 //update rooute
-app.put("/campgrounds/:")
+app.put("/campgrounds/:id",function(req,res){
+  //finc and update the correct campground
+  //redirect somewhere
+  Campground.findByIdAndUpdate(req.params.id, req.body.data, function(err,z){ 
+    //req.body.data coz form mein name="data[name]" ....
+    if(err)
+      {
+        console.log(err);
+        res.redirect("/campgrounds");
+      }
+    else{
+      res.render("/campgrounds/"+z._id);  //can also write req.params._id
+    }
+  });
+  
+});
 
 
 
