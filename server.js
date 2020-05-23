@@ -113,11 +113,6 @@ app.get("/campgrounds/:id",function(req,res){
   });
 });
 
-//now v r doing autherization here
-//1st check: if user is logged in or not
-//2nd :check if user is same as submitted by wala or not
-//if not redirect
-
 
 //edit route
 app.get("/campgrounds/:id/edit",function(req,res){
@@ -279,6 +274,39 @@ function isloggedin(req,res,next){
     return next();
   else
     res.redirect("/login");
+}
+
+
+//midlleware for edit and delete campground
+//now v r doing autherization here
+//1st check: if user is logged in or not
+//2nd :check if user is same as submitted by wala or not
+//if not redirect
+function checkOwernship(req,res,next){
+  if(req.isAuthenticated())
+    {
+      Campground.findById(req.params.id, function(err,z){
+        if(err)
+          {
+            console.log(err);
+            res.redirect("/campgrounds");
+          }
+        else
+          {
+            //does user own the campground, cant do === coz ek object hai and ek string
+            //so use equals function defined in mongoose
+            if(z.author.id.equals(req.user._id){
+               res.render("/campgrounds/edit",{campground:z})
+               })
+             else
+               res.send()
+          }
+      });
+    }
+  else
+    {
+      
+    }
 }
 
 app.listen(process.env.PORT, process.env.IP, function(){
