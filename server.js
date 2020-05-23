@@ -176,11 +176,12 @@ app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
       {
   //      console.log(z);
       console.log(err);
+      req.flash("error","Error, Try Again!");  
       res.redirect("/campgrounds/show"); //needed co logged in hai bt fir bhi sahi na chale then
       }
     else
       {
-        console.log(z);
+      console.log(z);
       res.render("comments/new",{campground:z});
       }
   });
@@ -198,6 +199,7 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
     if(err)
       {
         console.log(err);
+        req.flash("error","Error, Try Again!");
         res.redirect("/campgrounds/"+z._id);
       }
     else
@@ -219,7 +221,10 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
               if(err)
                 console.log(err);
               else
+                {                  
+                req.flash("done","Successfully created comment!");
                 res.redirect("/campgrounds/"+z._id);  
+                }
             });
             }
         });
@@ -238,6 +243,7 @@ app.get("/campgrounds/:id/comments/:comment_id/edit",checkcommentOwnership,funct
   Comment.findById(req.params.comment_id, function(err,z){
     if(err){
       console.log(err);
+      req.flash("error","Error, Try Again!");
       res.redirect("back");
     }
     else
@@ -252,10 +258,14 @@ app.put("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(r
     if(err)
       {
         console.log(err);
+        req.flash("error","Error, Try Again!");
         res.redirect("back");
       }
     else
+      {
+      req.flash("done","Successfully edited comment!");
       res.redirect("/campgrounds/"+req.params.id);
+      }
     //cant use z._id coz wo comment ki id hai bt v have to go back at show pg of campground
   })
 });
@@ -266,10 +276,14 @@ app.delete("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,functio
     if(err)
       {
         console.log(err);
+        req.flash("error","Error, Try Again!");
         res.redirect("back");
       }
     else
+      {
+      req.flash("done","Successfully deleted comment!");
       res.redirect("/campgrounds/"+req.params.id);
+      }
     //cant use z._id coz wo comment ki id hai bt v have to go back at show pg of campground
   })
 });
@@ -345,7 +359,7 @@ function checkOwnership(req,res,next){
         if(err)
           {
             console.log(err);
-            req.flash("error","System error, Kindly refresh.")
+            req.flash("error","System error, Kindly refresh.");
             res.redirect("back");
           }
         else
@@ -379,6 +393,7 @@ function checkcommentOwnership(req,res,next)
         if(err)
           {
             console.log(err);
+            req.flash("error","System error, Kindly refresh.");
             res.redirect("back");
           }
         else
@@ -390,6 +405,7 @@ function checkcommentOwnership(req,res,next)
                }
              else
                {console.log(err);
+                req.flash("error","You don't have permission!");
                 res.redirect("back");
                }
           }
@@ -397,6 +413,7 @@ function checkcommentOwnership(req,res,next)
     }
   else
     {
+      req.flash("error","Please Log-In First!");
       res.redirect("back");
     }
 }

@@ -39,13 +39,13 @@
         then it can be empty     -->
   <div class="container">
     <% if(notworked && notworked.length>0){ %> 
-    <div class="alert alert-danger" role="alert">
-    <%= message %>
+    <div id="alerts" class="alert alert-danger" role="alert">
+    <%= notworked %>
     </div>
     <% } %>
     <% if(itworked && itworked.length>0){ %> 
     <!--length>0 coz undefined ya empty na ho, then v dont want flash msg -->
-    <div class="alert alert-success" role="alert">
+    <div id="alerts" class="alert alert-success" role="alert">
     <%= itworked %>
     </div>
     <% } %>
