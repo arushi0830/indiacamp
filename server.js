@@ -287,6 +287,7 @@ app.post("/register",function(req,res){
     if(err)
       {
       console.log(err);
+         req.flash("error",err);  //its any key value pair, can use any name
         res.render("auth/register");
       }
     else
@@ -312,6 +313,7 @@ app.post("/login",passport.authenticate("local",
 //logout route
 app.get("/logout",function(req,res){
   req.logout();
+   req.flash("done","Successfully Logged You Out.");  //its any key value pair, can use any name
   res.redirect("/campgrounds");
 });
 
@@ -343,7 +345,7 @@ function checkOwnership(req,res,next){
         if(err)
           {
             console.log(err);
-            req.flash("error","System ")
+            req.flash("error","System error, Kindly refresh.")
             res.redirect("back");
           }
         else

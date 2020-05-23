@@ -33,5 +33,23 @@
     </ul>
   </div>
 </nav>
- <h2><%= message %></h2>   
+  
+       <!--length>0 coz empty na ho, then v dont want flash msg, it will never be undefined
+       coz humne define toh app.use mein hi kr diya tha,  bt if v dont send msg
+        then it can be empty     -->
+  <div class="container">
+    <% if(notworked && notworked.length>0){ %> 
+    <div class="alert alert-danger" role="alert">
+    <%= message %>
+    </div>
+    <% } %>
+    <% if(itworked && itworked.length>0){ %> 
+    <!--length>0 coz undefined ya empty na ho, then v dont want flash msg -->
+    <div class="alert alert-success" role="alert">
+    <%= itworked %>
+    </div>
+    <% } %>
+  </div>
+ 
+  
     
