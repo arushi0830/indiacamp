@@ -220,11 +220,14 @@ app.post("/campgrounds/:id/comments",isloggedin,function(req,res){
   });
 });
 
+
+//v want ki jisne comment kiya hai wo hi use delete kr sake,
+//anyone can comment on any campground bs logged in hona chaheye
 //2 ids aa ri hai ek comment ki hai n ek cmapground ki hai
 // :something means ki jo bhi uske wo as itis leke aao,
 // so :any_variabe_name
 //edit route
-app.get("/campgrounds/:id/comments/:comment_id/edit",function(req,res){
+app.get("/campgrounds/:id/comments/:comment_id/edit",checkcommentOwnership,function(req,res){
   Comment.findById(req.params.comment_id, function(err,z){
     if(err){
       console.log(err);
@@ -236,7 +239,7 @@ app.get("/campgrounds/:id/comments/:comment_id/edit",function(req,res){
 });
 
 //update route
-app.put("/campgrounds/:id/comments/:comment_id",function(req,res){
+app.put("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(req,res){
   //findByIdAndUpadte take 3 arguments
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err,z){
     if(err)
@@ -251,7 +254,7 @@ app.put("/campgrounds/:id/comments/:comment_id",function(req,res){
 });
 
 //delete route
-app.delete("/campgrounds/:id/comments/:comment_id",function(req,res){
+app.delete("/campgrounds/:id/comments/:comment_id",checkcommentOwnership,function(req,res){
   Comment.findByIdAndDelete(req.params.comment_id, req.body.comment, function(err,z){
     if(err)
       {
@@ -348,6 +351,38 @@ function checkOwnership(req,res,next){
       res.redirect("back");
     }
 }
+
+//comment ka middleware
+function checkcommentOwnership(req,res,next)
+{
+  if(req.isAuthenticated())
+    {
+      Comment.findById(req.params.comment_id, function(err,z){
+        if(err)
+          {
+            console.log(err);
+            res.redirect("back");
+          }
+        else
+          {
+            //jisne comment kiya hai kya wohi hai user, cant do === coz ek object hai and ek string
+            //so use equals function defined in mongoose
+            if(z.author.id.equals(req.user._id)){
+               next();
+               }
+             else
+               {console.log(err);
+                res.redirect("back");
+               }
+          }
+      });
+    }
+  else
+    {
+      res.redirect("back");
+    }
+}
+
 
 app.listen(process.env.PORT, process.env.IP, function(){
   console.log("yelp camp server started");
