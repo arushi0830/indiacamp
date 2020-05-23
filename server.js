@@ -327,14 +327,14 @@ app.post("/register",function(req,res){
   User.register(new User({username:req.body.username}), req.body.password, function(err,z){
     if(err)
       {
-      console.log(err);
+        console.log(err.message);
         req.flash("error",err.message); // .message likhna hoga else object aayega
         res.render("auth/register");
       }
     else
       {
         passport.authenticate("local")(req,res,function(){
-          req.flash("done","Welcome to Indiacamp"+ z.username);
+          req.flash("done","Welcome to Indiacamp "+ z.username);
           res.redirect("/campgrounds");
         });  //here if sign p sahi se ho gya then login kwa re
       }      //neeche in login its used as middleware coz before loggin in 
