@@ -238,7 +238,30 @@ app.get("/campgrounds/:id/comments/:comment_id/edit",function(req,res){
 //update route
 app.put("/campgrounds/:id/comments/:comment_id",function(req,res){
   //findByIdAndUpadte take 3 arguments
-  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(req,res))
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err,z){
+    if(err)
+      {
+        console.log(err);
+        res.redirect("back");
+      }
+    else
+      res.redirect("/campgrounds/"+req.params.id);
+    //cant use z._id coz wo comment ki id hai bt v have to go back at show pg of campground
+  })
+});
+
+//delete route
+app.delete("/campgrounds/:id/comments/:comment_id",function(req,res){
+  Comment.findByIdAndDelete(req.params.comment_id, req.body.comment, function(err,z){
+    if(err)
+      {
+        console.log(err);
+        res.redirect("back");
+      }
+    else
+      res.redirect("/campgrounds/"+req.params.id);
+    //cant use z._id coz wo comment ki id hai bt v have to go back at show pg of campground
+  })
 });
 
 ////////////////////////////AUTH ROUTES
