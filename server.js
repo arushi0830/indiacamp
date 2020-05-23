@@ -19,7 +19,7 @@ app.use(methodOverride("_method"));
 
 //var MONGODB_URI = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST+':'+process.env.DB_PORT+'/'+process.env.DB;
 var url='mongodb+srv://'+process.env.USER+':'+process.env.SECRET+'@'+'cluster0-mvqoy.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true , useFindAndModify: false })
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -154,10 +154,10 @@ app.delete("/campgrounds/:id",function(req,res){
   Campground.findByIdAndRemove(req.params.id,function(err,z){
     if(err){
       console.log(err);
-      res.redirect("/campgrounds/"+z._id);
+      res.redirect("/campgrounds");
     }
     else
-      res.redirect("/campgrounds/show");
+      res.redirect("/campgrounds");
   });
 });
 
