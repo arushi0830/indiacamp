@@ -115,13 +115,21 @@ app.get("/campgrounds/:id",function(req,res){
 
 //edit route
 app.get("/campgrounds/:id/edit",function(req,res){
-  res.render("/")
+  Campground.findById(req.params.id, function(err,z){
+    if(err)
+      {
+        console.log(err);
+        res.redirect("/campgrounds");
+      }
+    else
+      {
+        res.render("campgrounds/edit",{campground:z});
+      }
+  });    
 });
 
-
-
 //update rooute
-
+app.put("/campgrounds/:")
 
 
 
