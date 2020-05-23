@@ -52,7 +52,9 @@ passport.deserializeUser(User.deserializeUser());
 //as v have to pass req.user for nav bar taki uspe <li> accordingly display ho
 app.use(function(req,res,next){
   res.locals.currentUser=req.user;
-  res.locals.message=req.flash("error");
+  res.locals.notworked=req.flash("error");
+  res.locals.itworked=req.flash("done");
+  //any variables, and in brackets v have keys which r used to access the msg
   next();
 });
 
@@ -166,7 +168,7 @@ app.delete("/campgrounds/:id",checkOwnership,function(req,res){
 
 
 ////////////comments routes
-
+//=========================================================================================
 //new route
 app.get("/campgrounds/:id/comments/new",isloggedin,function(req,res){
   Campground.findById(req.params.id,function(err,z){
@@ -313,6 +315,10 @@ app.get("/logout",function(req,res){
   res.redirect("/campgrounds");
 });
 
+
+//middleware
+//===========================================================================================
+
 //now v dont want user to add comments without loginor signup
 //so uska middleware bna ri hai
 function isloggedin(req,res,next){
@@ -320,11 +326,10 @@ function isloggedin(req,res,next){
     return next();
   else
     {
-    req.flash("error","Please Log-In First");  
+    req.flash("error","Please Log-In First!");  //its any key value pair, can use any name
     res.redirect("/login");
     }
 }
-
 
 //midlleware for edit and delete campground
 //now v r doing autherization here
@@ -338,6 +343,7 @@ function checkOwnership(req,res,next){
         if(err)
           {
             console.log(err);
+            req.flash("error","System ")
             res.redirect("back");
           }
         else
@@ -349,6 +355,7 @@ function checkOwnership(req,res,next){
                }
              else
                {console.log(err);
+                 req.flash("error","You don't have permission!");  //its any key value pair, can use any name
                 res.redirect("back");
                }
           }
@@ -356,6 +363,7 @@ function checkOwnership(req,res,next){
     }
   else
     {
+      req.flash("error","Please Log-In First!");  //its any key value pair, can use any name
       res.redirect("back");
     }
 }
