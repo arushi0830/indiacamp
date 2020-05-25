@@ -37,3 +37,7 @@ img{
     content:" *";
     color: red;
 }
+
+.footer{
+  text-align:center;
+}

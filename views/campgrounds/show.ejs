@@ -6,9 +6,9 @@
         <div class="card">
           <div class="card-header"><strong>Indiacamp</strong></div>
           <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">Lorem Ipsum</li>
+          <li class="list-group-item">Lorem Ipsum</li>
+          <li class="list-group-item">Lorem Ipsum</li>
           </ul>
         </div> 
       </div>
@@ -28,10 +28,11 @@
          abb currrent user can be undefined or empty so uska check && se phla lga diya   --> 
      <%   if(currentUser && campground.author.id.equals(currentUser._id)){  %>
          <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-warning">Edit Campground</a>
-        <!-- edit mein sirf href bhejna tha , no data waas going so <a> se chal gya, bt in delete v have to send data
-              to delete from db -->
+        <!-- edit mein sirf href bhejna tha , no data waas going so <a> se chal gya, bt in delete v 
+        have to send data to delete from db -->
         <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>?_method=DELETE">
-          <!--form is needed coz form mein method hai, sirk link se nahi hoga coz link has only href and not method -->
+          <!--form is needed coz form mein method hai, sirk link se nahi hoga coz link has only href 
+          and not method -->
           <button class="btn btn-sm btn-danger">Delete Campground</button>
         </form>
  <%       }  %>
@@ -46,7 +47,7 @@
   <div class="card-body">
     <% campground.comments.forEach(function(comment){  %>   
     <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
-    <h5><%= comment.author.username %> <small class="text-muted">10 days ago</small> </h5> 
+    <h5><%= comment.author.username %></h5> 
     <%   if(currentUser && comment.author.id.equals(currentUser._id)){  %>
     <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-warning">Edit Comment</a>
     <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" action="POST">
