@@ -14,9 +14,14 @@
   color:white;
 }
 #sections-wapper2{
-  margin-bottom:10%;
-  /*background:url(https://wallpaperaccess.com/full/181060.jpg);*/
+  margin-bottom:5%;
+  /*background:url(https://wallpaperaccess.com/full/181060.jpg);
+  https://wallpaperplay.com/walls/full/3/3/2/88546.jpg*/
  background:url(https://i.pinimg.com/originals/aa/e6/4f/aae64ff37257a90cbb013d15a64da905.jpg);
   background-size: cover;
   padding-bottom:20%;
+}
+
+p{
+  text-align:justify;
 }
