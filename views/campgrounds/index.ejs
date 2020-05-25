@@ -26,6 +26,20 @@
 
 <!--<img src="..." class="rounded float-left" alt="...">-->
 
+    
+    
+    <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+    
+    
+    
+    
 <div class="row text-center">
     <% camps.forEach(function(camping){   %>
   <div class="col-md-4 col-sm-6">    
@@ -34,7 +48,7 @@
       <img src="<%= camping.image %>" class="card-img-top rounded" alt="img" >
       <div class="card-body">
         <h5 class="card-title"><%= camping.title %></h5>      
-        <a href="<%= camping._id%>" class="btn btn-primary">More Info</a>
+        <a href="/campgrounds/<%= camping._id%>" class="btn btn-primary">More Info</a>
       </div>
       
     </div>

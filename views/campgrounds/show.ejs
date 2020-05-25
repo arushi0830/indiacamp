@@ -39,6 +39,7 @@
         </div>
       </div>      
   </div>
+
   <div class="row">        
     <div class="float-right card col-md-8" id="abc">
       <h5 class="card-header text-right">
@@ -53,13 +54,13 @@
         <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" action="POST">
         <button class="btn btn-sm btn-danger">Delete Comment</button>
         </form>
-      <%   }   %>
-      <p class="card-text"><%= comment.text %></p>  
-      <hr class="my-4">
-      <%   })    %>
+        <%   }   %>
+        <p class="card-text"><%= comment.text %></p>  
+        <hr class="my-4">
+        <%   })    %>
       </div>
     </div>  
-</div>
+  </div>
 
 <%- include ("../partial/footer") -%>
 </div>
