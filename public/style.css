@@ -6,9 +6,15 @@
   margin:2%;
 }
 
-img{
-  margin-top:2%;
+.card-img-top {
+    max-height: 200px;
+    min-height: 150px;
+    object-fit: cover;
 }
+
+/*img{
+  margin-top:2%;
+}*/
 .col-md-3{
   margin-top:2%
 }
