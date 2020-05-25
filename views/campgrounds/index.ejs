@@ -8,7 +8,7 @@
   <a class="btn btn-primary btn-lg" href="campgrounds/new" role="button">Add new campground</a>
   </div>
   
-  <div class="row text-center">
+<!--  <div class="row text-center">
     <% camps.forEach(function(camping){   %>
     <div clas="col-fluid">
       <div class="img-thumbnail">
@@ -22,7 +22,23 @@
     </div>
     
     <%  }); %>
-  </div>
+  </div> -->
 
-<%- include("../partial/footer") -%>   
+
+
+<div class="row text-center">
+    <% camps.forEach(function(camping){   %>
+  <div class="col-md-4 col-sm-6">
+    <div class="card">
+      <img src="<%= camping.image %>" class="card-img-top" alt="img">
+      <div class="card-body">
+        <h5 class="card-title"><%= camping.title %></h5>      
+        <a href="<%= camping._id%>" class="btn btn-primary">More Info</a>
+      </div>
+    </div>
+  </div>
+   <%  }); %>
+</div>
+    
+    <%- include("../partial/footer") -%>   
 </div>
