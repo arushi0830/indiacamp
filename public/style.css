@@ -1,4 +1,4 @@
-.img-thumbnail{
+/*.img-thumbnail{
   margin:15px;
 }
 
@@ -6,18 +6,12 @@
   margin:2%;
 }
 
-.card-img-top {
-    max-height: 200px;
-    min-height: 150px;
-    object-fit: cover;
-}
-
-/*img{
+img{
   margin-top:2%;
-}*/
+}
 .col-md-3{
   margin-top:2%
-}
+}*/
 
 .img-fluid{
   width:100%;

@@ -14,56 +14,52 @@
       </div>
           
       <div class="card col-md-8">       
-      <img src="<%=campground.image%>" class="card-img-top" alt="flower valley image">
+      <img src="<%=campground.image%>" class="card-img-top" alt="img">
         <div class="card-body">
         <h5 class="card-title"><%= campground.title %></h5>
         <p class="card-text">
           <p><em>Submitted By: <%= campground.author.username %></em></p>
           <!-- em tag is for italics-->
-        <%= campground.description %>
+          <%= campground.description %>
         </p>
         <!-- now v checking agr logged in user is same as jisne campground banya hai
-            , if not same then dont show edit and delete buttons
-                    currentUser aa ra hai, humne server.js mein upar likha tha.
-         abb currrent user can be undefined or empty so uska check && se phla lga diya   --> 
-     <%   if(currentUser && campground.author.id.equals(currentUser._id)){  %>
-         <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-warning">Edit Campground</a>
+        ,if not same then dont show edit and delete buttons currentUser aa ra hai, humne server.
+        js mein upar likha tha. abb currrent user can be undefined or empty so uska check && se 
+        phla lga diya   --> 
+        <%  if(currentUser && campground.author.id.equals(currentUser._id)){  %>
+        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-warning">Edit Campground</a>
         <!-- edit mein sirf href bhejna tha , no data waas going so <a> se chal gya, bt in delete v 
         have to send data to delete from db -->
         <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>?_method=DELETE">
-          <!--form is needed coz form mein method hai, sirk link se nahi hoga coz link has only href 
-          and not method -->
-          <button class="btn btn-sm btn-danger">Delete Campground</button>
+        <!--form is needed coz form mein method hai, sirk link se nahi hoga coz link has only href 
+        and not method -->
+        <button class="btn btn-sm btn-danger">Delete Campground</button>
         </form>
- <%       }  %>
+        <%      }  %>
         </div>
       </div>      
-     </div>
-<div class="row">        
-<div class="float-right card col-md-8" id="abc">
-  <h5 class="card-header text-right">
-  <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary">Add Comment</a>
-  </h5>
-  <div class="card-body">
-    <% campground.comments.forEach(function(comment){  %>   
-    <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
-    <h5><%= comment.author.username %></h5> 
-    <%   if(currentUser && comment.author.id.equals(currentUser._id)){  %>
-    <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-warning">Edit Comment</a>
-    <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" action="POST">
-          <button class="btn btn-sm btn-danger">Delete Comment</button>
-    </form>
-     <%   }   %>
-    <p class="card-text"><%= comment.text %></p>  
-    <hr class="my-4">
-    <%   })    %>
   </div>
-</div>  
+  <div class="row">        
+    <div class="float-right card col-md-8" id="abc">
+      <h5 class="card-header text-right">
+      <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary">Add Comment</a>
+      </h5>
+      <div class="card-body">
+        <% campground.comments.forEach(function(comment){  %>   
+        <!--as comments ke ander wale mein 2 things ha author n text upe loop krna hai.-->
+        <h5><%= comment.author.username %></h5> 
+        <%   if(currentUser && comment.author.id.equals(currentUser._id)){  %>
+        <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-warning">Edit Comment</a>
+        <form id="delform" method="POST" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" action="POST">
+        <button class="btn btn-sm btn-danger">Delete Comment</button>
+        </form>
+      <%   }   %>
+      <p class="card-text"><%= comment.text %></p>  
+      <hr class="my-4">
+      <%   })    %>
+      </div>
+    </div>  
 </div>
-
-
-
-
 
 <%- include ("../partial/footer") -%>
 </div>
