@@ -1,15 +1,15 @@
-body{
+#land body{
 	background:url(https://i.pinimg.com/originals/aa/e6/4f/aae64ff37257a90cbb013d15a64da905.jpg);
 	background-size: cover;
 	font-family: oswald;
 }
 
-#text{
+#land #text{
 	text-align: left;
 	padding-top: 25%;
 	color: white;
 }
 
-#disp{
+#land #disp{
   color:white;
 }

@@ -7,12 +7,14 @@
   </head>
   <body>    
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
   <a class="navbar-brand" href="/">INDIACAMP</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
     <ul class="nav navbar-nav ml-auto"> 
       <!--ml-auto puts thinsg to right and mr-auto puts things to left -->
    <%   if(!currentUser){      %>   <!--agr currentUser empty or undefined hai ie.logged nahi hai user then -->
@@ -32,6 +34,7 @@
   <%    }  %>
     </ul>
   </div>
+    </div>
 </nav>
   
        <!--length>0 coz empty na ho, then v dont want flash msg, it will never be undefined
