@@ -1,4 +1,4 @@
-var mongoose=require("mongoose");
+/*var mongoose=require("mongoose");
 var Campground=require("./models/campground");
 var Comment=require("./models/comment");
 var data=[{
@@ -53,4 +53,4 @@ function seedDB(){
 }
 });
 };
-module.exports=seedDB;
+module.exports=seedDB;*/
